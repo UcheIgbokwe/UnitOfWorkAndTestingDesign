@@ -10,52 +10,65 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<TDbContext, T> : IGenericRepository<T> where TDbContext : DbContext where T : class
     {
         public readonly ILogger _logger;
         internal DbSet<T> _dbSet;
-        protected DataContext _context;
-        public GenericRepository(DataContext context, ILogger logger)
+        protected TDbContext _context;
+        public GenericRepository(TDbContext context, ILogger logger)
         {
             _context = context;
             _logger = logger;
             _dbSet = context.Set<T>();
 
         }
-        public virtual async Task<bool> Add(T entity)
+        public void Add(T entity)
+        {
+            _dbSet.Add(entity);
+        }
+        public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            return true;
         }
-
-        public virtual Task<IEnumerable<T>> All()
+        public async Task AddRangeAsync(IEnumerable<T> entity)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddRangeAsync(entity);
         }
-
-        public virtual async Task<bool> Delete(int id)
+        public List<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbSet.ToList();
         }
-
-        public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
+        public async Task<List<T>> GetAllAsync()
         {
-            return await _dbSet.Where(predicate).ToListAsync();
+            return await _dbSet.ToListAsync();
         }
-
-        public virtual async Task<T> GetById(int id)
+        public void Attach(T entity)
         {
-            return await _dbSet.FindAsync(id);
+            _dbSet.Attach(entity);
         }
-
-        public virtual Task<bool> Update(T entity)
+        public void AttachRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            _dbSet.AttachRange(entities);
         }
-
-        private DbSet<TEntity> GetEntities<TEntity>() where TEntity : class
+        public void Remove(T entity)
         {
-            return _context.Set<TEntity>();
+            _dbSet.Remove(entity);
+        }
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
+        }
+        public void UpdateRange(IEnumerable<T> entities)
+        {
+            _dbSet.UpdateRange(entities);
+        }
+        public IQueryable<T> GetQuery()
+        {
+            return _dbSet.AsQueryable();
         }
     }
 }

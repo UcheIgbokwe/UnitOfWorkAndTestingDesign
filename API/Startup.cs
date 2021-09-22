@@ -31,8 +31,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddScoped<DbContext, DataContext>();
+            services.AddUnitOfWork<DataContext>();
             services.AddControllers();
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
         }

@@ -7,7 +7,7 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUserRepository Users { get; }
+        IGenericRepository<T> Repository<T>() where T : class;
         Task CompleteAsync();
     }
 }
