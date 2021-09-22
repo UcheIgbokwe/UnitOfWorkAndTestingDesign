@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Model;
 
-namespace Infrastructure.Repository.Interfaces
+namespace Infrastructure
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserCreation
     {
-        
+        List<User> GetAllUsers();
+        Task<bool> CreateUser(User user);
     }
 }
