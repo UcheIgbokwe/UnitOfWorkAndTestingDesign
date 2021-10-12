@@ -34,6 +34,10 @@ namespace Infrastructure.Repository
         {
             await _dbSet.AddRangeAsync(entity);
         }
+        public T GetById(object id)
+        {
+            return _dbSet.Find(id);
+        }
         public List<T> GetAll()
         {
             return _dbSet.ToList();

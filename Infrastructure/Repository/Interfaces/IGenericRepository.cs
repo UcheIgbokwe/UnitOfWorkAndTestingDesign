@@ -14,6 +14,8 @@ namespace Infrastructure.Repository.Interfaces
 
         Task AddRangeAsync(IEnumerable<T> entity);
 
+        T GetById(object id);
+        
         List<T> GetAll();
 
         Task<List<T>> GetAllAsync();

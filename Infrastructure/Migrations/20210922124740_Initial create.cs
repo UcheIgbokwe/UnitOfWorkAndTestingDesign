@@ -14,10 +14,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roless", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Roless", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Teams",
@@ -27,10 +24,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Teams", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Users",
